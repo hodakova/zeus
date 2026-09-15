@@ -35,19 +35,21 @@ export default function AuditPage() {
             <th>Gedung</th>
             <th>Periode</th>
             <th>Status</th>
+            <th>Aksi</th>
           </tr>
         </thead>
 
         <tbody>
           {audits.map((audit) => (
             <tr key={audit.id}>
-              <td>
-                <Link to={`/audits/${audit.id}`}>
-                  {audit.building}
-                </Link>
-              </td>
+              <td>{audit.building}</td>
               <td>{audit.period}</td>
               <td>{audit.status}</td>
+              <td>
+                <Link to={`/audits/${audit.id}`} className="audit-detail-link">
+                  Lihat Detail
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

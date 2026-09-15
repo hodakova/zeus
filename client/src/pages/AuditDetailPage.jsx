@@ -1,28 +1,46 @@
+import { useState } from "react";
+
 import "../styles/pages.css";
+import "../components/audit/audit.css";
+
+import AuditOverview from "../components/audit/AuditOverview";
+import AuditEnergy from "../components/audit/AuditEnergy";
+import AuditCompliance from "../components/audit/AuditCompliance";
+import AuditResult from "../components/audit/AuditResult";
+import AuditReport from "../components/audit/AuditReport";
 
 export default function AuditDetailPage() {
 
-  const energyData = [
+  const [activeTab, setActiveTab] = useState("overview");
+
+  const auditEnergyData = [
     {
       id: 1,
       kategori: "Konsumsi Energi",
-      parameter: "Total Energi",
+      parameter: "Total Konsumsi Energi",
       nilai: 12000,
       satuan: "kWh",
     },
     {
       id: 2,
       kategori: "HVAC",
-      parameter: "Daya AC",
+      parameter: "Daya Aktual AC",
       nilai: 15,
       satuan: "kW",
     },
     {
       id: 3,
       kategori: "Pencahayaan",
-      parameter: "Intensitas Cahaya",
+      parameter: "Intensitas Pencahayaan",
       nilai: 350,
       satuan: "lux",
+    },
+    {
+      id: 4,
+      kategori: "Faktor Daya",
+      parameter: "Faktor Daya",
+      nilai: 0.92,
+      satuan: "-",
     },
   ];
 
@@ -30,72 +48,73 @@ export default function AuditDetailPage() {
     <>
       <div className="audit-header">
         <h1 className="audit-title">
-          Audit Energi Gedung Teknik 2026
+          Audit Energi Kelistrikan Gedung A Periode 2026
         </h1>
 
         <p className="audit-subtitle">
           Status: Aktif
         </p>
-        </div>
+      </div>
 
-        <div className="audit-tabs">
-        <button className="audit-tab active">
+      <div className="audit-tabs">
+        <button 
+          className={`audit-tab ${activeTab === "overview" ? "active" : ""}`}
+          onClick={() => setActiveTab("overview")}
+        >
           Overview
         </button>
 
-        <button className="audit-tab">
+        <button 
+          className={`audit-tab ${activeTab === "energy" ? "active" : ""}`}
+          onClick={() => setActiveTab("energy")}
+        >
           Data Energi
         </button>
 
-        <button className="audit-tab">
-          Checklist
+        <button 
+          className={`audit-tab ${activeTab === "compliance" ? "active" : ""}`}
+          onClick={() => setActiveTab("compliance")}
+        >
+          Kepatuhan Standar
         </button>
 
-        <button className="audit-tab">
+        <button
+          className={`audit-tab ${activeTab === "result" ? "active" : ""}`}
+          onClick={() => setActiveTab("result")}
+        >
           Hasil
         </button>
 
-        <button className="audit-tab">
+        <button 
+          className={`audit-tab ${activeTab === "report" ? "active" : ""}`}
+          onClick={() => setActiveTab("report")}
+        >
           Laporan
         </button>
-        </div>
+      </div>
 
-        <div className="info-grid">
-        <div className="info-card">
-          <h3>Informasi Gedung</h3>
+      <div className="audit-content">
+        {activeTab === "overview" && (
+          <AuditOverview />
+        )}
 
-          <div className="info-item">
-          <span className="info-label">
-            Luas:
-          </span>
-            2000 m²
-          </div>
+        {activeTab === "energy" && (
+          <AuditEnergy
+            auditEnergyData ={auditEnergyData }
+          />
+        )}
 
-          <div className="info-item">
-          <span className="info-label">
-            Lokasi:
-          </span>
-            Bandung
-          </div>
-        </div>
+        {activeTab === "compliance" && (
+          <AuditCompliance />
+        )}
 
-        <div className="info-card">
-          <h3>Informasi Audit</h3>
+        {activeTab === "result" && (
+          <AuditResult />
+        )}
 
-          <div className="info-item">
-            <span className="info-label">
-                Periode:
-            </span>
-            2026
-          </div>
-
-          <div className="info-item">
-          <span className="info-label">
-            Auditor:
-          </span>
-            Asep
-          </div>
-        </div>
+        {activeTab === "report" && (
+          <AuditReport />
+        )}
       </div>
     </>
   );

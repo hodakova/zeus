@@ -11,12 +11,12 @@ export default function Sidebar() {
           Dashboard
         </NavLink>
 
-        <NavLink to="/audits">
-          Audit
-        </NavLink>
-
         <NavLink to="/buildings">
           Gedung
+        </NavLink>
+
+        <NavLink to="/audits">
+          Audit
         </NavLink>
 
         <NavLink to="/settings">

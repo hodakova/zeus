@@ -29,9 +29,16 @@ export default function BuildingPage() {
           Daftar Gedung
         </h1>
 
-        <button className="primary-button">
-          + Tambah Gedung
-        </button>
+        <div className="page-header-actions">
+          <button className="primary-button">
+            <div className="symbol">✎</div>
+            Edit Daftar Gedung
+          </button>
+          <button className="primary-button">
+            <div className="symbol"><b>+</b></div>
+            Tambah Gedung
+          </button>
+        </div>
       </div>
 
       <table className="data-table">

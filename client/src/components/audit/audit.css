@@ -33,6 +33,10 @@
   border-color: #244058;
 }
 
+.audit-tab:not(.active):hover {
+  background: #f8f9fb;
+}
+
 .audit-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -93,6 +97,29 @@
   margin-bottom: 8px;
 }
 
+.audit-item h2 {
+    margin-top: 4px;
+    color: #244058;
+}
+
+.audit-item-value {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+}
+
+.audit-item-value .audit-label {
+  font-weight: 600;
+  position: relative;
+}
+
+.audit-item-value .audit-label::after {
+  content: ":";
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .audit-label {
   font-weight: 600;
   margin-right: 8px;
@@ -113,6 +140,11 @@
     font-size: 24px;
     font-weight: 600;
     color: #244058;
+}
+
+.audit-section-actions {
+    display: flex;
+    gap: 12px;
 }
 
 .audit-table {

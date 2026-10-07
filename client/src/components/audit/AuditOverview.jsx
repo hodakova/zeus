@@ -4,37 +4,37 @@ export default function AuditOverview() {
       <div className="audit-card">
         <h3>Informasi Audit</h3>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Nama Audit:
+            Nama Audit
           </span>
           Audit Energi Kelistrikan Gedung A Periode 2026
         </div>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Status:
+            Status
           </span>
           Aktif
         </div>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Periode:
+            Periode
           </span>
           2026
         </div>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Tanggal Audit:
+            Tanggal Audit
           </span>
           27 Juni 2026
         </div>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Auditor:
+            Auditor
           </span>
           Asep
         </div>
@@ -43,30 +43,30 @@ export default function AuditOverview() {
       <div className="audit-card">
         <h3>Informasi Gedung</h3>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Nama:
+            Nama
           </span>
           Gedung A
         </div>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Lokasi:
+            Lokasi
           </span>
           Bandung
         </div>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Luas:
+            Luas
           </span>
           2000 m²
         </div>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Jumlah Lantai:
+            Jumlah Lantai
           </span>
           4
         </div>
@@ -75,31 +75,31 @@ export default function AuditOverview() {
       <div className="audit-card">
         <h3>Ringkasan Audit</h3>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Data Energi:
+            Data Energi
           </span>
           24 Parameter
         </div>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Kepatuhan Standar:
+            Kepatuhan Standar
           </span>
           15 / 18 (83%)
         </div>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Standar:
+            Standar
           </span>
           ISO 50002 dan
           SNI 03-6196-2000
         </div>
 
-        <div className="audit-item">
+        <div className="audit-item audit-item-value">
           <span className="audit-label">
-            Intensitas Konsumsi Energi:
+            Intensitas Konsumsi Energi
           </span>
           Belum dihitung
         </div>

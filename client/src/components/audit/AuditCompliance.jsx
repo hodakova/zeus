@@ -31,16 +31,13 @@ export default function AuditCompliance() {
 
           <div className="audit-item">
             Persyaratan Terpenuhi
+            <h2>15 / 18</h2>
           </div>
-
-          <h2>15 / 18</h2>
 
           <div className="audit-item">
             Tingkat Kepatuhan
+            <h2>83%</h2>
           </div>
-
-          <h2>83%</h2>
-
         </div>
 
       </div>

@@ -7,13 +7,13 @@ export default function AuditPage() {
       id: 1,
       building: "Gedung A",
       period: "2025",
-      status: "Selesai",
+      status: "✅ Selesai",
     },
     {
       id: 2,
       building: "Gedung B",
       period: "2026",
-      status: "Aktif",
+      status: "🟢 Aktif",
     },
   ];
 
@@ -24,9 +24,12 @@ export default function AuditPage() {
           Daftar Audit
         </h1>
 
-        <button className="primary-button">
-          + Audit Baru
-        </button>
+        <div className="audit-section-actions">
+          <button className="primary-button">
+            <div className="symbol"><b>+</b></div>
+            Audit Baru
+          </button>
+        </div>
       </div>
 
       <table className="data-table">
@@ -47,7 +50,7 @@ export default function AuditPage() {
               <td>{audit.status}</td>
               <td>
                 <Link to={`/audits/${audit.id}`} className="audit-detail-link">
-                  Lihat Detail
+                  👁 Lihat Detail
                 </Link>
               </td>
             </tr>

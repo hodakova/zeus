@@ -6,9 +6,16 @@ export default function AuditEnergy({ auditEnergyData  }) {
           Data Energi
         </h2>
 
-        <button className="primary-button">
-          + Tambah Data
-        </button>
+        <div className="audit-section-actions">
+          <button className="primary-button">
+            <div className="symbol">✎</div>
+            Edit Data
+          </button>
+          <button className="primary-button">
+            <div className="symbol"><b>+</b></div>
+            Tambah Data
+          </button>
+        </div>
       </div>
 
       <table className="data-table">

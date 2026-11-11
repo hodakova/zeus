@@ -1,4 +1,8 @@
-export default function AuditEnergy({ auditEnergyData }) {
+import { useAudit } from "../../context/AuditContext";
+
+export default function AuditEnergy() {
+  const { energyData } = useAudit();
+
   return (
     <>
       <div className="flex justify-between items-center mb-5">
@@ -25,12 +29,12 @@ export default function AuditEnergy({ auditEnergyData }) {
           </tr>
         </thead>
         <tbody>
-          {auditEnergyData.map((data) => (
+          {energyData.map((data) => (
             <tr key={data.id} className="border-b border-gray-100 hover:bg-gray-50">
-              <td className="px-4.5 py-3.5">{data.kategori}</td>
+              <td className="px-4.5 py-3.5">{data.category}</td>
               <td className="px-4.5 py-3.5">{data.parameter}</td>
-              <td className="px-4.5 py-3.5">{data.nilai}</td>
-              <td className="px-4.5 py-3.5">{data.satuan}</td>
+              <td className="px-4.5 py-3.5">{data.value}</td>
+              <td className="px-4.5 py-3.5">{data.unit}</td>
             </tr>
           ))}
         </tbody>

@@ -2,19 +2,19 @@ import { useState } from "react";
 import { useAudit } from "../../context/AuditContext";
 
 export default function AuditNoncontinuousLoad() {
-  const { nonKontinuData, totalNonKontinuKWh, addNonKontinuItem } = useAudit();
-  const [form, setForm] = useState({ peralatan: "", dayaKW: "", jamOperasi: "", hariKerja: 22 });
+  const { noncontinuousData, totalNoncontinuousKWh, addNoncontinuousItem } = useAudit();
+  const [form, setForm] = useState({ equipment: "", powerKW: "", operatingHours: "", workingDays: 22 });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.peralatan || !form.dayaKW || !form.jamOperasi) return;
-    addNonKontinuItem({
-      peralatan: form.peralatan,
-      dayaKW: parseFloat(form.dayaKW),
-      jamOperasi: parseFloat(form.jamOperasi),
-      hariKerja: parseInt(form.hariKerja),
+    if (!form.equipment || !form.powerKW || !form.operatingHours) return;
+    addNoncontinuousItem({
+      equipment: form.equipment,
+      powerKW: parseFloat(form.powerKW),
+      operatingHours: parseFloat(form.operatingHours),
+      workingDays: parseInt(form.workingDays),
     });
-    setForm({ peralatan: "", dayaKW: "", jamOperasi: "", hariKerja: 22 });
+    setForm({ equipment: "", powerKW: "", operatingHours: "", workingDays: 22 });
   };
 
   return (
@@ -34,8 +34,8 @@ export default function AuditNoncontinuousLoad() {
           <input
             type="text"
             placeholder="Contoh: Lampu Ruang Rapat"
-            value={form.peralatan}
-            onChange={(e) => setForm({ ...form, peralatan: e.target.value })}
+            value={form.equipment}
+            onChange={(e) => setForm({ ...form, equipment: e.target.value })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#244058]"
           />
         </div>
@@ -45,8 +45,8 @@ export default function AuditNoncontinuousLoad() {
             type="number"
             step="0.1"
             placeholder="0.0"
-            value={form.dayaKW}
-            onChange={(e) => setForm({ ...form, dayaKW: e.target.value })}
+            value={form.powerKW}
+            onChange={(e) => setForm({ ...form, powerKW: e.target.value })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#244058]"
           />
         </div>
@@ -55,8 +55,8 @@ export default function AuditNoncontinuousLoad() {
           <input
             type="number"
             placeholder="8"
-            value={form.jamOperasi}
-            onChange={(e) => setForm({ ...form, jamOperasi: e.target.value })}
+            value={form.operatingHours}
+            onChange={(e) => setForm({ ...form, operatingHours: e.target.value })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#244058]"
           />
         </div>
@@ -64,8 +64,8 @@ export default function AuditNoncontinuousLoad() {
           <label className="block text-xs font-semibold text-gray-600 mb-1">Hari/Bulan</label>
           <input
             type="number"
-            value={form.hariKerja}
-            onChange={(e) => setForm({ ...form, hariKerja: e.target.value })}
+            value={form.workingDays}
+            onChange={(e) => setForm({ ...form, workingDays: e.target.value })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#244058]"
           />
         </div>
@@ -85,12 +85,12 @@ export default function AuditNoncontinuousLoad() {
           </tr>
         </thead>
         <tbody className="text-sm">
-          {nonKontinuData.map((item) => (
+          {noncontinuousData.map((item) => (
             <tr key={item.id} className="border-b border-gray-100 hover:bg-gray-50">
-              <td className="px-5 py-3.5 font-medium text-gray-800">{item.peralatan}</td>
-              <td className="px-5 py-3.5 text-gray-800">{item.dayaKW} kW</td>
-              <td className="px-5 py-3.5 text-gray-800">{item.jamOperasi} Jam</td>
-              <td className="px-5 py-3.5 text-gray-800">{item.hariKerja} Hari</td>
+              <td className="px-5 py-3.5 font-medium text-gray-800">{item.equipment}</td>
+              <td className="px-5 py-3.5 text-gray-800">{item.powerKW} kW</td>
+              <td className="px-5 py-3.5 text-gray-800">{item.operatingHours} Jam</td>
+              <td className="px-5 py-3.5 text-gray-800">{item.workingDays} Hari</td>
               <td className="px-5 py-3.5 font-semibold text-[#244058]">{item.totalKWh.toLocaleString()} kWh</td>
             </tr>
           ))}
@@ -98,7 +98,7 @@ export default function AuditNoncontinuousLoad() {
         <tfoot className="bg-gray-50 font-bold text-sm text-[#244058]">
           <tr>
             <td colSpan="4" className="px-5 py-3.5 text-right">Total Beban Nonkontinu:</td>
-            <td className="px-5 py-3.5 text-base">{totalNonKontinuKWh.toLocaleString()} kWh/Bulan</td>
+            <td className="px-5 py-3.5 text-base">{totalNoncontinuousKWh.toLocaleString()} kWh/Bulan</td>
           </tr>
         </tfoot>
       </table>

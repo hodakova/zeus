@@ -2,18 +2,18 @@ import { useState } from "react";
 import { useAudit } from "../../context/AuditContext";
 
 export default function AuditContinuousLoad() {
-  const { kontinuData, totalKontinuKWh, addKontinuItem } = useAudit();
-  const [form, setForm] = useState({ peralatan: "", dayaKW: "", jamOperasi: 24 });
+  const { continuousData, totalContinuousKWh, addContinuousItem } = useAudit();
+  const [form, setForm] = useState({ equipment: "", powerKW: "", operatingHours: 24 });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.peralatan || !form.dayaKW) return;
-    addKontinuItem({
-      peralatan: form.peralatan,
-      dayaKW: parseFloat(form.dayaKW),
-      jamOperasi: 24,
+    if (!form.equipment || !form.powerKW) return;
+    addContinuousItem({
+      equipment: form.equipment,
+      powerKW: parseFloat(form.powerKW),
+      operatingHours: 24,
     });
-    setForm({ peralatan: "", dayaKW: "", jamOperasi: 24 });
+    setForm({ equipment: "", powerKW: "", operatingHours: 24 });
   };
 
   return (
@@ -33,8 +33,8 @@ export default function AuditContinuousLoad() {
           <input
             type="text"
             placeholder="Contoh: Server & UPS"
-            value={form.peralatan}
-            onChange={(e) => setForm({ ...form, peralatan: e.target.value })}
+            value={form.equipment}
+            onChange={(e) => setForm({ ...form, equipment: e.target.value })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#244058]"
           />
         </div>
@@ -44,8 +44,8 @@ export default function AuditContinuousLoad() {
             type="number"
             step="0.1"
             placeholder="0.0"
-            value={form.dayaKW}
-            onChange={(e) => setForm({ ...form, dayaKW: e.target.value })}
+            value={form.powerKW}
+            onChange={(e) => setForm({ ...form, powerKW: e.target.value })}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#244058]"
           />
         </div>
@@ -73,11 +73,11 @@ export default function AuditContinuousLoad() {
           </tr>
         </thead>
         <tbody className="text-sm">
-          {kontinuData.map((item) => (
+          {continuousData.map((item) => (
             <tr key={item.id} className="border-b border-gray-100 hover:bg-gray-50">
-              <td className="px-5 py-3.5 font-medium text-gray-800">{item.peralatan}</td>
-              <td className="px-5 py-3.5 text-gray-800">{item.dayaKW} kW</td>
-              <td className="px-5 py-3.5 text-gray-800">{item.jamOperasi} Jam</td>
+              <td className="px-5 py-3.5 font-medium text-gray-800">{item.equipment}</td>
+              <td className="px-5 py-3.5 text-gray-800">{item.powerKW} kW</td>
+              <td className="px-5 py-3.5 text-gray-800">{item.operatingHours} Jam</td>
               <td className="px-5 py-3.5 font-semibold text-[#244058]">{item.totalKWh.toLocaleString()} kWh</td>
             </tr>
           ))}
@@ -85,7 +85,7 @@ export default function AuditContinuousLoad() {
         <tfoot className="bg-gray-50 font-bold text-sm text-[#244058]">
           <tr>
             <td colSpan="3" className="px-5 py-3.5 text-right">Total Beban Kontinu:</td>
-            <td className="px-5 py-3.5 text-base">{totalKontinuKWh.toLocaleString()} kWh/Bulan</td>
+            <td className="px-5 py-3.5 text-base">{totalContinuousKWh.toLocaleString()} kWh/Bulan</td>
           </tr>
         </tfoot>
       </table>

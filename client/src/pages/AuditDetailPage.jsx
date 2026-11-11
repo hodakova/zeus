@@ -10,37 +10,6 @@ import AuditReport from "../components/audit/AuditReport";
 export default function AuditDetailPage() {
   const [activeTab, setActiveTab] = useState("overview");
 
-  const auditEnergyData = [
-    {
-      id: 1,
-      kategori: "Konsumsi Energi",
-      parameter: "Total Konsumsi Energi",
-      nilai: 12000,
-      satuan: "kWh",
-    },
-    {
-      id: 2,
-      kategori: "HVAC",
-      parameter: "Daya Aktual AC",
-      nilai: 15,
-      satuan: "kW",
-    },
-    {
-      id: 3,
-      kategori: "Pencahayaan",
-      parameter: "Intensitas Pencahayaan",
-      nilai: 350,
-      satuan: "lux",
-    },
-    {
-      id: 4,
-      kategori: "Faktor Daya",
-      parameter: "Faktor Daya",
-      nilai: 0.92,
-      satuan: "-",
-    },
-  ];
-
   const getTabClass = (tabName) =>
     `px-4 py-2 border rounded-lg cursor-pointer font-medium text-sm transition-colors ${
       activeTab === tabName
@@ -104,9 +73,7 @@ export default function AuditDetailPage() {
 
       <div className="mt-4">
         {activeTab === "overview" && <AuditOverview />}
-        {activeTab === "energy" && (
-          <AuditEnergy auditEnergyData={auditEnergyData} />
-        )}
+        {activeTab === "energy" && <AuditEnergy />}
         {activeTab === "continuous" && <AuditContinuousLoad />}
         {activeTab === "noncontinuous" && <AuditNoncontinuousLoad />}
         {activeTab === "compliance" && <AuditCompliance />}

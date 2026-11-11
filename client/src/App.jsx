@@ -1,10 +1,13 @@
 import Layout from "./components/Layout";
 import AppRoutes from "./routes/AppRoutes";
+import { AuditProvider } from "./context/AuditContext";
 
 export default function App() {
   return (
-    <Layout>
-      <AppRoutes />
-    </Layout>
+    <AuditProvider>
+      <Layout>
+        <AppRoutes />
+      </Layout>
+    </AuditProvider>
   );
 }

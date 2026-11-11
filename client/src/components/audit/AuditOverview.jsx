@@ -1,109 +1,95 @@
 export default function AuditOverview() {
-  return(
-    <div className="audit-grid">
-      <div className="audit-card">
-        <h3>Informasi Audit</h3>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="bg-white rounded-xl p-4.5 shadow-sm border border-gray-100">
+        <h3 className="mb-2.5 text-[#244058] font-bold text-lg">Informasi Audit</h3>
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Nama Audit
           </span>
-          Audit Energi Kelistrikan Gedung A Periode 2026
+          <span>Audit Energi Kelistrikan Gedung A Periode 2026</span>
         </div>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Status
           </span>
-          Aktif
+          <span>Aktif</span>
         </div>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Periode
           </span>
-          2026
+          <span>2026</span>
         </div>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Tanggal Audit
           </span>
-          27 Juni 2026
+          <span>27 Juni 2026</span>
         </div>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Auditor
           </span>
-          Asep
+          <span>Asep</span>
         </div>
       </div>
 
-      <div className="audit-card">
-        <h3>Informasi Gedung</h3>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+      <div className="bg-white rounded-xl p-4.5 shadow-sm border border-gray-100">
+        <h3 className="mb-2.5 text-[#244058] font-bold text-lg">Informasi Gedung</h3>
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Nama
           </span>
-          Gedung A
+          <span>Gedung A</span>
         </div>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Lokasi
           </span>
-          Bandung
+          <span>Bandung</span>
         </div>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Luas
           </span>
-          2000 m²
+          <span>2000 m²</span>
         </div>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Jumlah Lantai
           </span>
-          4
+          <span>4</span>
         </div>
       </div>
 
-      <div className="audit-card">
-        <h3>Ringkasan Audit</h3>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+      <div className="bg-white rounded-xl p-4.5 shadow-sm border border-gray-100">
+        <h3 className="mb-2.5 text-[#244058] font-bold text-lg">Ringkasan Audit</h3>
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Data Energi
           </span>
-          24 Parameter
+          <span>24 Parameter</span>
         </div>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Kepatuhan Standar
           </span>
-          15 / 18 (83%)
+          <span>15 / 18 (83%)</span>
         </div>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Standar
           </span>
-          ISO 50002 dan
-          SNI 03-6196-2000
+          <span>ISO 50002 dan SNI 03-6196-2000</span>
         </div>
-
-        <div className="audit-item audit-item-value">
-          <span className="audit-label">
+        <div className="grid grid-cols-[120px_1fr] gap-3 mb-2 text-sm">
+          <span className="font-semibold relative after:content-[':'] after:absolute after:top-0 after:right-0">
             Intensitas Konsumsi Energi
           </span>
-          Belum dihitung
+          <span>Belum dihitung</span>
         </div>
       </div>
     </div>
-  )
+  );
 }

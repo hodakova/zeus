@@ -2,106 +2,220 @@ import { useState } from "react";
 import { useAudit } from "../../context/AuditContext";
 
 export default function AuditNoncontinuousLoad() {
-  const { noncontinuousData, totalNoncontinuousKWh, addNoncontinuousItem } = useAudit();
-  const [form, setForm] = useState({ equipment: "", powerKW: "", operatingHours: "", workingDays: 22 });
+  const { noncontinuousData, totalNoncontinuousKWh } = useAudit();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortRules, setSortRules] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!form.equipment || !form.powerKW || !form.operatingHours) return;
-    addNoncontinuousItem({
-      equipment: form.equipment,
-      powerKW: parseFloat(form.powerKW),
-      operatingHours: parseFloat(form.operatingHours),
-      workingDays: parseInt(form.workingDays),
+  const handleSort = (key) => {
+    setSortRules((prevRules) => {
+      const existingIndex = prevRules.findIndex((r) => r.key === key);
+
+      if (existingIndex !== -1) {
+        const existingRule = prevRules[existingIndex];
+        if (existingRule.direction === "asc") {
+          const updatedRule = { key, direction: "desc" };
+          const remainingRules = prevRules.filter((r) => r.key !== key);
+          return [updatedRule, ...remainingRules];
+        } else {
+          return prevRules.filter((r) => r.key !== key);
+        }
+      } else {
+        return [{ key, direction: "asc" }, ...prevRules];
+      }
     });
-    setForm({ equipment: "", powerKW: "", operatingHours: "", workingDays: 22 });
+  };
+
+  const handleResetSort = () => {
+    setSortRules([]);
+  };
+
+  const filteredNoncontinuousData = noncontinuousData.filter((item) => {
+    const query = searchTerm.toLowerCase().trim();
+    if (!query) return true;
+
+    return (
+      item.equipment.toLowerCase().includes(query) ||
+      item.powerKW.toString().includes(query) ||
+      item.operatingHours.toString().includes(query) ||
+      item.workingDays.toString().includes(query) ||
+      item.totalKWh.toString().includes(query)
+    );
+  });
+
+  const sortedNoncontinuousData = [...filteredNoncontinuousData].sort((a, b) => {
+    for (const rule of sortRules) {
+      const { key, direction } = rule;
+      const aVal = a[key];
+      const bVal = b[key];
+
+      let comparison = 0;
+      if (typeof aVal === "number" && typeof bVal === "number") {
+        comparison = aVal - bVal;
+      } else {
+        const aStr = String(aVal).toLowerCase();
+        const bStr = String(bVal).toLowerCase();
+        if (aStr < bStr) comparison = -1;
+        if (aStr > bStr) comparison = 1;
+      }
+
+      if (comparison !== 0) {
+        return direction === "asc" ? comparison : -comparison;
+      }
+    }
+    return 0;
+  });
+
+  const renderSortIcon = (key) => {
+    const ruleIndex = sortRules.findIndex((r) => r.key === key);
+    if (ruleIndex === -1) {
+      return <span className="text-gray-400/60 text-[10px] ml-1">▲▼</span>;
+    }
+    const rule = sortRules[ruleIndex];
+    return (
+      <span className="inline-flex items-center gap-0.5 text-emerald-400 font-bold text-[10px] ml-1">
+        {rule.direction === "asc" ? "▲" : "▼"}
+        {sortRules.length > 1 && (
+          <span className="text-[9px] bg-emerald-500/30 text-emerald-200 px-1 rounded-full font-mono">
+            {ruleIndex + 1}
+          </span>
+        )}
+      </span>
+    );
   };
 
   return (
-    <>
-      <div className="flex justify-between items-center mb-5">
-        <div>
-          <h1 className="text-2xl font-bold text-[#244058]">Beban Nonkontinu</h1>
-          <p className="text-xs text-gray-500 mt-1">
-            Peralatan/Beban intermiten yang hanya beroperasi pada jam kerja
-          </p>
+    <div className="space-y-5">
+      <div>
+        <h1 className="text-2xl font-bold text-[#244058]">Beban Nonkontinu</h1>
+        <p className="text-xs text-gray-500 mt-1">
+          Peralatan/Beban intermiten yang hanya beroperasi pada jam kerja
+        </p>
+      </div>
+
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="relative w-full sm:w-80">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+              🔍
+            </span>
+            <input
+              type="text"
+              placeholder="Cari Beban"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-9 pr-8 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#244058]"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-xs text-gray-400 hover:text-gray-600 font-bold"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {sortRules.length > 0 && (
+            <button
+              onClick={handleResetSort}
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-semibold transition whitespace-nowrap"
+              title="Kembalikan urutan tabel ke normal"
+            >
+              🔄 Reset Urutan
+            </button>
+          )}
+        </div>
+
+        <div className="flex gap-3 w-full sm:w-auto justify-end">
+          <button className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
+            ✎ Edit Beban
+          </button>
+          <button className="bg-[#244058] text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition">
+            + Tambah Beban
+          </button>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 flex flex-wrap gap-4 items-end">
-        <div className="flex-1 min-w-50">
-          <label className="block text-xs font-semibold text-gray-600 mb-1">Nama Peralatan</label>
-          <input
-            type="text"
-            placeholder="Contoh: Lampu Ruang Rapat"
-            value={form.equipment}
-            onChange={(e) => setForm({ ...form, equipment: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#244058]"
-          />
-        </div>
-        <div className="w-28">
-          <label className="block text-xs font-semibold text-gray-600 mb-1">Daya (kW)</label>
-          <input
-            type="number"
-            step="0.1"
-            placeholder="0.0"
-            value={form.powerKW}
-            onChange={(e) => setForm({ ...form, powerKW: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#244058]"
-          />
-        </div>
-        <div className="w-28">
-          <label className="block text-xs font-semibold text-gray-600 mb-1">Jam/Hari</label>
-          <input
-            type="number"
-            placeholder="8"
-            value={form.operatingHours}
-            onChange={(e) => setForm({ ...form, operatingHours: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#244058]"
-          />
-        </div>
-        <div className="w-28">
-          <label className="block text-xs font-semibold text-gray-600 mb-1">Hari/Bulan</label>
-          <input
-            type="number"
-            value={form.workingDays}
-            onChange={(e) => setForm({ ...form, workingDays: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-[#244058]"
-          />
-        </div>
-        <button type="submit" className="bg-[#244058] text-white px-5 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition">
-          + Tambah Beban
-        </button>
-      </form>
-
-      <table className="w-full border-collapse bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
-        <thead className="bg-[#244058] text-white text-sm">
-          <tr>
-            <th className="px-5 py-3.5 text-left font-semibold">Nama Peralatan</th>
-            <th className="px-5 py-3.5 text-left font-semibold">Daya (kW)</th>
-            <th className="px-5 py-3.5 text-left font-semibold">Jam/Hari</th>
-            <th className="px-5 py-3.5 text-left font-semibold">Hari/Bulan</th>
-            <th className="px-5 py-3.5 text-left font-semibold">Total Konsumsi (kWh/Bulan)</th>
-          </tr>
-        </thead>
-        <tbody className="text-sm">
-          {noncontinuousData.map((item) => (
-            <tr key={item.id} className="border-b border-gray-100 hover:bg-gray-50">
-              <td className="px-5 py-3.5 font-medium text-gray-800">{item.equipment}</td>
-              <td className="px-5 py-3.5 text-gray-800">{item.powerKW} kW</td>
-              <td className="px-5 py-3.5 text-gray-800">{item.operatingHours} Jam</td>
-              <td className="px-5 py-3.5 text-gray-800">{item.workingDays} Hari</td>
-              <td className="px-5 py-3.5 font-semibold text-[#244058]">{item.totalKWh.toLocaleString()} kWh</td>
+      <div className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm">
+        <table className="w-full border-collapse text-left">
+          <thead className="bg-[#244058] text-white text-sm select-none">
+            <tr>
+              <th
+                onClick={() => handleSort("equipment")}
+                className="px-5 py-3.5 font-semibold cursor-pointer hover:bg-[#1d3347] transition"
+              >
+                <div className="flex items-center justify-between gap-1">
+                  <span>Nama Peralatan</span>
+                  {renderSortIcon("equipment")}
+                </div>
+              </th>
+              <th
+                onClick={() => handleSort("powerKW")}
+                className="px-5 py-3.5 font-semibold cursor-pointer hover:bg-[#1d3347] transition"
+              >
+                <div className="flex items-center justify-between gap-1">
+                  <span>Daya (kW)</span>
+                  {renderSortIcon("powerKW")}
+                </div>
+              </th>
+              <th
+                onClick={() => handleSort("operatingHours")}
+                className="px-5 py-3.5 font-semibold cursor-pointer hover:bg-[#1d3347] transition"
+              >
+                <div className="flex items-center justify-between gap-1">
+                  <span>Jam/Hari</span>
+                  {renderSortIcon("operatingHours")}
+                </div>
+              </th>
+              <th
+                onClick={() => handleSort("workingDays")}
+                className="px-5 py-3.5 font-semibold cursor-pointer hover:bg-[#1d3347] transition"
+              >
+                <div className="flex items-center justify-between gap-1">
+                  <span>Hari/Bulan</span>
+                  {renderSortIcon("workingDays")}
+                </div>
+              </th>
+              <th
+                onClick={() => handleSort("totalKWh")}
+                className="px-5 py-3.5 font-semibold cursor-pointer hover:bg-[#1d3347] transition"
+              >
+                <div className="flex items-center justify-between gap-1">
+                  <span>Total Konsumsi (kWh/Bulan)</span>
+                  {renderSortIcon("totalKWh")}
+                </div>
+              </th>
             </tr>
-          ))}
-        </tbody>
-        <tfoot className="bg-gray-50 font-bold text-sm text-[#244058]">
-          <tr>
-            <td colSpan="4" className="px-5 py-3.5 text-right">Total Beban Nonkontinu:</td>
-            <td className="px-5 py-3.5 text-base">{totalNoncontinuousKWh.toLocaleString()} kWh/Bulan</td>
-          </tr>
-        </tfoot>
-      </table>
-    </>
+          </thead>
+          <tbody className="text-sm">
+            {sortedNoncontinuousData.length > 0 ? (
+              sortedNoncontinuousData.map((item) => (
+                <tr key={item.id} className="border-b border-gray-100 hover:bg-gray-50 transition">
+                  <td className="px-5 py-3.5 font-medium text-gray-800">{item.equipment}</td>
+                  <td className="px-5 py-3.5 text-gray-800">{item.powerKW} kW</td>
+                  <td className="px-5 py-3.5 text-gray-800">{item.operatingHours} Jam</td>
+                  <td className="px-5 py-3.5 text-gray-800">{item.workingDays} Hari</td>
+                  <td className="px-5 py-3.5 font-semibold text-[#244058]">
+                    {item.totalKWh.toLocaleString()} kWh
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="px-5 py-8 text-center text-gray-400 text-sm">
+                  Tidak ada beban yang cocok dengan kata kunci "<strong>{searchTerm}</strong>"
+                </td>
+              </tr>
+            )}
+          </tbody>
+          <tfoot className="bg-gray-50 font-bold text-sm text-[#244058]">
+            <tr>
+              <td colSpan="4" className="px-5 py-3.5 text-right">Total Beban Nonkontinu:</td>
+              <td className="px-5 py-3.5 text-base">{totalNoncontinuousKWh.toLocaleString()} kWh/Bulan</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
   );
 }

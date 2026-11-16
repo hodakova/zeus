@@ -10,6 +10,8 @@ import AuditReport from "../components/audit/AuditReport";
 export default function AuditDetailPage() {
   const [activeTab, setActiveTab] = useState("overview");
 
+  const auditStatus = "Aktif"; 
+
   const getTabClass = (tabName) =>
     `px-4 py-2 border rounded-lg cursor-pointer font-medium text-sm transition-colors ${
       activeTab === tabName
@@ -19,11 +21,26 @@ export default function AuditDetailPage() {
 
   return (
     <>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#244058]">
-          Audit Energi Kelistrikan Gedung A Periode 2026
-        </h1>
-        <p className="text-gray-500 text-sm mt-1">Status: Aktif</p>
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <h1 className="text-2xl font-bold text-[#244058]">
+              Audit Energi Kelistrikan Gedung Kerjasama PLN-ITB Periode 2026
+            </h1>
+            <span
+              className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                auditStatus === "Aktif"
+                  ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                  : "bg-blue-50 text-blue-700 border border-blue-200"
+              }`}
+            >
+              Status: {auditStatus}
+            </span>
+          </div>
+          <p className="text-gray-500 text-xs mt-1">
+            Gedung Kerjasama PLN-ITB • Kota Bandung • Auditor: Asep
+          </p>
+        </div>
       </div>
 
       <div className="flex gap-2 mb-6 flex-wrap">
